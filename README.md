@@ -32,3 +32,5 @@ The Mediocre Big Budget Movies Showcase project aims to create a platform where 
    - Implement user authentication to allow users to sign up, log in, and manage their profiles.
 
 This project will serve as a comprehensive showcase of mediocre big-budget movies, providing users with an engaging and informative platform to explore and discuss these often overlooked films.
+
+**Deployed Link** : https://mediocre-movies.onrender.com
