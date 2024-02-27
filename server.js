@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const Router  = require('./route.js');
 
 const app = express();
 const port = 3000;
-
+app.use(Router)
 // MongoDB connection
 const dbURI = process.env.DB_URI;
 
@@ -51,7 +52,7 @@ app.get('/', (req, res) => {
 if (require.main === module) {
   app.listen(port, () => {
     console.log(`🚀 Server running on PORT: ${port}`);
-  });
+  }); 
 }
 
 module.exports = app;

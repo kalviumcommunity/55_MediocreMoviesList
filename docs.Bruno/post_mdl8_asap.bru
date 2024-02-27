@@ -1,0 +1,20 @@
+meta {
+  name: post_mdl8_asap
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/post
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "John Doe",
+    "age": 30,
+    "email": "john@example.com",
+    "address": "123 Main Street"
+  }
+}
