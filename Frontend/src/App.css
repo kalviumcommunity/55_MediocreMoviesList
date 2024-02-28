@@ -10,7 +10,7 @@
 .landing-page {
   position: relative;
   height: 100vh;
-  background-image: url("C:/Users/Dhruvil/Desktop/Worst_movies/Frontend/src/assets/movie-bg.jpg");
+  background-image: url("./assets/movie-bg.jpg");
   background-size: cover;
   background-position: center;
   display: flex;
