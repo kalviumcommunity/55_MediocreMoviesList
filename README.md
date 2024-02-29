@@ -33,4 +33,6 @@ The Mediocre Big Budget Movies Showcase project aims to create a platform where 
 
 This project will serve as a comprehensive showcase of mediocre big-budget movies, providing users with an engaging and informative platform to explore and discuss these often overlooked films.
 
-**Deployed Link** : https://mediocre-movies.onrender.com
+**Deployed Server Link** : https://mediocre-movies.onrender.com
+
+**Deployed Client Link** : https://mediocre-movies.onrender.com
