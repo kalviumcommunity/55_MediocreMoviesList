@@ -26,7 +26,7 @@ const dbConnection = mongoose.connection;
 // Event listener for connection error
 dbConnection.on('error', (err) => {
   console.error('❌ MongoDB connection error:', err.message);
-});
+}); 
 
 // Event listener for disconnection and reconnection
 dbConnection.on('disconnected', () => {
