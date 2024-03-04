@@ -35,4 +35,4 @@ This project will serve as a comprehensive showcase of mediocre big-budget movie
 
 **Deployed Server Link** : https://mediocre-movies.onrender.com
 
-**Deployed Client Link** : https://mediocre-movies.onrender.com
+**Deployed Client Link** : https://mediocremovies.vercel.app/

@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #ffd000;
+  color: #ff0000;
   text-align: center;
   z-index: 0;
 }
@@ -88,6 +88,15 @@
   align-items: center;
 }
 
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Creates 4 columns with equal width */
+  gap: 20px; /* Adds gap between each card */
+  justify-content: center;
+  margin-top: 20px; /* Adjust margin top as needed */
+}
+
+
 .card {
   display: flex;
   flex-direction: column;
@@ -119,3 +128,5 @@
   margin-bottom: 5px;
   font-size: 0.8rem;
 }
+
+

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 router.use(express.json());
+const mongoose = require('mongoose');
+const Movie = require('./MovieSchema');
 
 // POST route to create a new resource
 router.post('/post', (req, res) => {
@@ -15,9 +17,10 @@ router.post('/post', (req, res) => {
 });
 
 // GET route to read data
-router.get('/read', (req, res) => {
+router.get('/read', async (req, res) => {
     try {
-        res.status(200).json({ message: 'Data Read Successfully' });
+        const movies = await Movie.find(); 
+        res.status(200).json(movies);
     } catch (err) {
         console.error('Error in GET request:', err);
         res.status(500).json({ error: 'Internal Server Error' });
