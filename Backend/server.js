@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const Router  = require('./route.js');
+var cors = require('cors');
+app.use(cors())
 
 const app = express();
 const port = 3000;
@@ -29,7 +31,7 @@ dbConnection.on('error', (err) => {
 }); 
 
 // Event listener for disconnection and reconnection
-dbConnection.on('disconnected', () => {
+dbConnection.on('disconnected', () => { 
   console.log('❌ MongoDB disconnected');
 });
 
