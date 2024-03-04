@@ -1,17 +1,17 @@
-import React from 'react';
-import './App.css';
+import './App.css'
+import Home from './Components/Home.jsx'
+import Landing from './Components/Landing.jsx'
+import { Route,Routes } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="landing-page">
-      <div className='trans'></div>
-      <div className='container'>
-      <h1>Mediocre Big Budget Movies</h1>
-      <p>Welcome to our site! Explore a collection of pathetic big-budget movies that offer little to no entertainment value and may leave you questioning your life choices.</p>
-      <a href="/home" className="explore-button">Explore Now</a>
-      </div>
-    </div>
-  );
+    <>
+      <Routes>
+        <Route path='/' element = {<Landing/>} />
+        <Route path='/Home' element = {<Home/>} />
+      </Routes>
+    </>
+  )
 }
 
-export default App;
+export default App
