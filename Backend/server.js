@@ -6,7 +6,7 @@ const Router  = require('./route.js');
 const app = express();
 const port = 3000;
 app.use(Router)
-// MongoDB connection
+// MongoDB connection 
 const dbURI = process.env.DB_URI;
 
 const connectToDB = async () => {
