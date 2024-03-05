@@ -3,6 +3,9 @@ const router = express.Router();
 router.use(express.json());
 const mongoose = require('mongoose');
 const Movie = require('./MovieSchema');
+const cors = require('cors')
+
+router.use(cors());
 
 // POST route to create a new resource
 router.post('/post', (req, res) => {
