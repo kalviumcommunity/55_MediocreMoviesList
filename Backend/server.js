@@ -8,7 +8,9 @@ var cors = require('cors')
 const app = express();
 const port = 3000;
 app.use(Router)
-app.use(cors())
+app.use(cors({
+  origin:"http://localhost:5173"
+}))
 
 // MongoDB connection 
 const dbURI = process.env.DB_URI;
