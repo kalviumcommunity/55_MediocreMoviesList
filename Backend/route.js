@@ -19,6 +19,26 @@ router.post('/post', (req, res) => {
     }
 });
 
+
+// POST route to create a new movie entity
+router.post('/add', async (req, res) => {
+    try {
+        const hasSequel = req.body.hasSequel === 'true';
+        const newMovie = await Movie.create({
+            ...req.body,
+            hasSequel: hasSequel
+        });
+        console.log('New movie created:', newMovie);
+        res.status(201).json({ message: 'Movie created successfully', movie: newMovie });
+    } catch (err) {
+        console.error('Error in POST request:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+
+
 // GET route to read data
 router.get('/read', async (req, res) => {
     try {

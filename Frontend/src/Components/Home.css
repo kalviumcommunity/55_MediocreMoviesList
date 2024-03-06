@@ -17,22 +17,13 @@
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-image: url("../assets/movie-bg.jpg");
+  background-image: url("../assets/movie-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat:no-repeat
 }
 
-.trans {
-  background-color: rgba(0, 0, 0, 0.6);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 200%;
-  z-index: 1;
-  overflow-y: scroll;
-}
+
 
 .navbar {
   position: fixed;
