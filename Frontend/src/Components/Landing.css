@@ -10,7 +10,7 @@
 .landing-page {
   position: relative;
   height: 100vh;
-  background-image: url("../assets/movie-bg.jpg");
+  background-image: url("../assets/movie-bg.png");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -22,7 +22,6 @@
 }
 
 .trans{
-  background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
   top: 0;
   left: 0;

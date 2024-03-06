@@ -13,7 +13,7 @@ function Home() {
 
   const fetchMovies = async () => {
     try {
-      const response = await fetch("https://five5-mediocremovieslist.onrender.com/read");
+      const response = await fetch("https://mediocre-movies.onrender.com/read");
       const data = await response.json();
       setMovies(data);
     } catch (error) {
@@ -42,8 +42,8 @@ function Home() {
               </form>
             </div>
             <div className="navbar-links">
-              <Link to="/">Home</Link>
-              <Link to="/about">About</Link>
+              <Link to="/Home">Home</Link>
+              <Link to="/Form">Add-Entity</Link>
               <Link to="/contact">Contact</Link>
             </div>
           </div>
