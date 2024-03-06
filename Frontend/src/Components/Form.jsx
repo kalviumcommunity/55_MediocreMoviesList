@@ -11,7 +11,7 @@ function Form() {
 
   const onSubmit = async (formData) => {
     try {
-      await axios.post("http://localhost:3000/add", formData);
+      await axios.post("https://mediocre-movies.onrender.com/add", formData);
       sessionStorage.setItem("registrationSuccess", "true");
       console.log(formData);
       window.location.href = "/Home";
