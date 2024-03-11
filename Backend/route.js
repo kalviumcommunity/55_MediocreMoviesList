@@ -1,24 +1,11 @@
 const express = require('express');
 const router = express.Router();
-router.use(express.json());
 const mongoose = require('mongoose');
 const Movie = require('./MovieSchema');
-const cors = require('cors')
+const cors = require('cors');
 
+router.use(express.json());
 router.use(cors());
-
-// POST route to create a new resource
-router.post('/post', (req, res) => {
-    try {
-        const data = req.body;
-        console.log('Data received:', data);
-        res.json({ message: 'Resource created successfully', data });
-    } catch (err) {
-        console.error('Error in POST request:', err);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
 
 // POST route to create a new movie entity
 router.post('/add', async (req, res) => {
@@ -36,10 +23,7 @@ router.post('/add', async (req, res) => {
     }
 });
 
-
-
-
-// GET route to read data
+// GET route to read all movies
 router.get('/read', async (req, res) => {
     try {
         const movies = await Movie.find(); 
@@ -50,20 +34,48 @@ router.get('/read', async (req, res) => {
     }
 });
 
-// PUT route to update data
-router.put('/update', (req, res) => {
+// GET route to read a specific movie by ID
+router.get('/read/:id', async (req, res) => {
     try {
-        res.status(200).json({ message: 'Data Updated Successfully' });
+        const movie = await Movie.findById(req.params.id); 
+        if (!movie) {
+            return res.status(404).json({ error: 'Movie not found' });
+        }
+        res.status(200).json(movie);
+    } catch (err) {
+        console.error('Error in GET request:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// PUT route to update a movie by ID
+router.put('/update/:id', async (req, res) => {
+    try {
+        const hasSequel = req.body.hasSequel === 'true';
+        const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, {
+            ...req.body,
+            hasSequel: hasSequel
+        }, { new: true });
+        if (!updatedMovie) {
+            return res.status(404).json({ error: 'Movie not found' });
+        }
+        console.log('Movie updated:', updatedMovie);
+        res.status(200).json({ message: 'Movie updated successfully', movie: updatedMovie });
     } catch (err) {
         console.error('Error in PUT request:', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
-// DELETE route to delete data
-router.delete('/delete', (req, res) => {
+// DELETE route to delete a movie by ID
+router.delete('/delete/:id', async (req, res) => {
     try {
-        res.status(200).json({ message: 'Data Deleted Successfully' });
+        const deletedMovie = await Movie.findByIdAndDelete(req.params.id); 
+        if (!deletedMovie) {
+            return res.status(404).json({ error: 'Movie not found' });
+        }
+        console.log('Movie deleted:', deletedMovie);
+        res.status(200).json({ message: 'Movie deleted successfully' });
     } catch (err) {
         console.error('Error in DELETE request:', err);
         res.status(500).json({ error: 'Internal Server Error' });

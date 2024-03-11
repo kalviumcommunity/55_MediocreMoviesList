@@ -103,14 +103,14 @@
 .card {
   display: flex;
   flex-direction: column;
-  margin-top: 200px;
-  width: 250px;
-  height: 530px;
+  margin-top: 120px;
+  width: 300px;
+  height: 580px;
   padding: 10px;
   border-radius: 5px;
-  margin-left: 70px;
+  margin-left: 35px;
   background-color: #fff;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -132,6 +132,59 @@
 .card-info p {
   margin-bottom: 5px;
   font-size: 0.8rem;
+}
+
+.card-buttons{
+  margin-top: 15px;
+}
+
+.update-button {
+  background-color: rgba(0, 201, 0, 0.393);
+  color: rgb(0, 144, 14);
+  border: 2px solid green;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.delete-button {
+  background-color: rgba(197, 0, 0, 0.409);
+  color: rgb(175, 0, 0);
+  border: 2px solid red;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.update-button:hover,
+.delete-button:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+  .card-container {
+    grid-template-columns: 1fr; 
+  }
+
+  .card {
+    margin-left: auto; 
+    margin-right: auto;
+    width: 80%; 
+    margin-top: 200px;
+  }
+
+  .navbar {
+    flex-direction: column; 
+  }
+
+  .navbar-brand {
+    margin-bottom: 20px; 
+  }
+
+  .search-bar {
+    margin-bottom: 20px; 
+  }
 }
 
 
