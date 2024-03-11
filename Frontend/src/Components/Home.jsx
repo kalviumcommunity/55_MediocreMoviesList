@@ -13,7 +13,7 @@ function Home() {
 
   const fetchMovies = async () => {
     try {
-      const response = await fetch("http://localhost:3000/read");
+      const response = await fetch("https://mediocre-movies.onrender.com/read");
       const data = await response.json();
       setMovies(data);
     } catch (error) {
@@ -23,7 +23,7 @@ function Home() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:3000/delete/${id}`, {
+      await fetch(`https://mediocre-movies.onrender.com/delete/${id}`, {
         method: "DELETE",
       });
       fetchMovies(); 
