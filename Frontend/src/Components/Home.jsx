@@ -13,11 +13,22 @@ function Home() {
 
   const fetchMovies = async () => {
     try {
-      const response = await fetch("https://mediocre-movies.onrender.com/read");
+      const response = await fetch("http://localhost:3000/read");
       const data = await response.json();
       setMovies(data);
     } catch (error) {
       console.error("Error fetching movies:", error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`http://localhost:3000/delete/${id}`, {
+        method: "DELETE",
+      });
+      fetchMovies(); 
+    } catch (error) {
+      console.error("Error deleting movie:", error);
     }
   };
 
@@ -76,6 +87,17 @@ function Home() {
                     <strong>Has Sequel:</strong>{" "}
                     {movie.hasSequel ? "TRUE" : "FALSE"}
                   </p>
+                  <div className="card-buttons">
+                    <Link to={`/update/${movie._id}`}>
+                      <button className="update-button">Update</button>
+                    </Link>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(movie._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

@@ -20,7 +20,7 @@ function Form() {
     }
   };
 
-  return (
+  return ( 
     <div className="form-container">
       <div className="bg-img"></div>
       <div className="trans"></div>
