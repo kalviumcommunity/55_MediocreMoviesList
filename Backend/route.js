@@ -2,15 +2,32 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Movie = require('./MovieSchema');
+const Joi = require('joi');
 const cors = require('cors');
 
 router.use(express.json());
 router.use(cors());
 
+// Define Joi schema for validation
+const movieSchema = Joi.object({
+    movieName: Joi.string().required(),
+    releaseDate: Joi.string().required(),
+    industry: Joi.string().required(),
+    director: Joi.string().required(),
+    budget: Joi.string().required(),
+    imdbRating: Joi.string().required(),
+    rottenTomatoesRating: Joi.string().required(),
+    hasSequel: Joi.boolean().required(),
+    img: Joi.string().uri().required() 
+});
+
 // POST route to create a new movie entity
 router.post('/add', async (req, res) => {
+    const { error } = movieSchema.validate(req.body);
+    if (error) return res.status(400).json({ error: error.details[0].message });
+
+    const hasSequel = req.body.hasSequel === 'true';
     try {
-        const hasSequel = req.body.hasSequel === 'true';
         const newMovie = await Movie.create({
             ...req.body,
             hasSequel: hasSequel
@@ -50,15 +67,17 @@ router.get('/read/:id', async (req, res) => {
 
 // PUT route to update a movie by ID
 router.put('/update/:id', async (req, res) => {
+    const { error } = movieSchema.validate(req.body);
+    if (error) return res.status(400).json({ error: error.details[0].message });
+
+    const hasSequel = req.body.hasSequel === 'true';
     try {
-        const hasSequel = req.body.hasSequel === 'true';
         const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, {
             ...req.body,
             hasSequel: hasSequel
         }, { new: true });
-        if (!updatedMovie) {
-            return res.status(404).json({ error: 'Movie not found' });
-        }
+        if (!updatedMovie) return res.status(404).json({ error: 'Movie not found' });
+        
         console.log('Movie updated:', updatedMovie);
         res.status(200).json({ message: 'Movie updated successfully', movie: updatedMovie });
     } catch (err) {
