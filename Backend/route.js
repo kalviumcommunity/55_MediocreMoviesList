@@ -41,7 +41,7 @@ router.post('/add', async (req, res) => {
 });
 
 // GET route to read all movies
-router.get('/read', async (req, res) => {
+router.get('/read', async (req, res) => { 
     try {
         const movies = await Movie.find(); 
         res.status(200).json(movies);

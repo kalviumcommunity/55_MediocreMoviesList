@@ -14,7 +14,7 @@ app.use(Login)
 
 
 // MongoDB connection 
-const dbURI = process.env.DB_URI;
+const dbURI = process.env.DB_URI; 
 
 const connectToDB = async () => {
   try {

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logoImg from "../assets/logo.png";
 import searchImg from "../assets/search.png";
-import axios from "axios";
 import "./Home.css";
 
 function Home() {
   const [movies, setMovies] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchMovies();
@@ -44,7 +44,14 @@ function Home() {
   const handleLogout = () => {
     sessionStorage.removeItem("login");
     setIsLoggedIn(false);
-    // You can use Link for navigation
+  };
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
+  const handleSignupClick = () => {
+    navigate("/signup");
   };
 
   const filteredMovies = movies.filter((movie) =>
@@ -79,19 +86,16 @@ function Home() {
             <div className="navbar-links">
               {!isLoggedIn ? (
                 <>
-                  <Link to="/login" className="nav-button">
+                  <button className="nav-button" onClick={handleLoginClick}>
                     Login
-                  </Link>
-                  <button className="nav-button" disabled>
-                    Add-Entity
                   </button>
-                  <Link to="/signup" className="nav-button">
+                  <button className="nav-button" onClick={handleSignupClick}>
                     Signup
-                  </Link>
+                  </button>
                 </>
               ) : (
                 <>
-                  <Link to="/insert" className="nav-button">
+                  <Link to="/form" className="nav-button">
                     Add-Entity
                   </Link>
                   <button className="nav-button" onClick={handleLogout}>
@@ -133,9 +137,9 @@ function Home() {
                   <div className="card-buttons">
                     {isLoggedIn && (
                       <>
-                        <Link to={`/update/${movie._id}`} className="update-button">
-                          Update
-                        </Link>
+                        <Link to={`/update/${movie._id}`}>
+                      <button className="update-button">Update</button>
+                    </Link>
                         <button
                           className="delete-button"
                           onClick={() => handleDelete(movie._id)}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -31,7 +31,7 @@ function Login() {
       if (response.status === 200) {
         sessionStorage.setItem('loginSuccess', 'Login successful');
         sessionStorage.setItem('login', true);
-        navigate("/");
+        navigate("/home");
       } else {
         setLoginMessage('Invalid Credentials');
       }
@@ -43,7 +43,11 @@ function Login() {
 
   return (
     <div className="form-container">
+      <div className="bg-img"></div>
+      <div className="trans"></div>
+      
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <h3 style={{ textAlign: "center", marginBottom: "20px" }}>Login Page</h3>
         <label>Username:</label>
         <input type="text" {...register("username", { required: true })} />
         {errors.username && <p className="error">Username is required</p>}
