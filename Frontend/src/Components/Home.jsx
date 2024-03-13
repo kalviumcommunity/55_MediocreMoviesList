@@ -2,13 +2,17 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logoImg from "../assets/logo.png";
 import searchImg from "../assets/search.png";
+import axios from "axios";
 import "./Home.css";
 
 function Home() {
   const [movies, setMovies] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     fetchMovies();
+    checkLoginStatus();
   }, []);
 
   const fetchMovies = async () => {
@@ -21,16 +25,31 @@ function Home() {
     }
   };
 
+  const checkLoginStatus = () => {
+    const loginStatus = sessionStorage.getItem("login");
+    setIsLoggedIn(loginStatus === "true");
+  };
+
   const handleDelete = async (id) => {
     try {
       await fetch(`https://mediocre-movies.onrender.com/delete/${id}`, {
         method: "DELETE",
       });
-      fetchMovies(); 
+      fetchMovies();
     } catch (error) {
       console.error("Error deleting movie:", error);
     }
   };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("login");
+    setIsLoggedIn(false);
+    // You can use Link for navigation
+  };
+
+  const filteredMovies = movies.filter((movie) =>
+    movie.movieName.toLowerCase().includes(searchInput.toLowerCase())
+  );
 
   return (
     <>
@@ -46,20 +65,44 @@ function Home() {
             </div>
             <div className="search-bar">
               <form className="input-group">
-                <input type="text" placeholder="Search" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                />
                 <button type="submit">
                   <img src={searchImg} alt="search" />
                 </button>
               </form>
             </div>
             <div className="navbar-links">
-              <Link to="/Home">Home</Link>
-              <Link to="/Form">Add-Entity</Link>
-              <Link to="/contact">Contact</Link>
+              {!isLoggedIn ? (
+                <>
+                  <Link to="/login" className="nav-button">
+                    Login
+                  </Link>
+                  <button className="nav-button" disabled>
+                    Add-Entity
+                  </button>
+                  <Link to="/signup" className="nav-button">
+                    Signup
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/insert" className="nav-button">
+                    Add-Entity
+                  </Link>
+                  <button className="nav-button" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </>
+              )}
             </div>
           </div>
           <div className="card-container">
-            {movies.map((movie) => (
+            {filteredMovies.map((movie) => (
               <div className="card" key={movie._id}>
                 <img src={movie.img} alt="movie poster" width="250px" />
                 <div className="card-info">
@@ -88,15 +131,19 @@ function Home() {
                     {movie.hasSequel ? "TRUE" : "FALSE"}
                   </p>
                   <div className="card-buttons">
-                    <Link to={`/update/${movie._id}`}>
-                      <button className="update-button">Update</button>
-                    </Link>
-                    <button
-                      className="delete-button"
-                      onClick={() => handleDelete(movie._id)}
-                    >
-                      Delete
-                    </button>
+                    {isLoggedIn && (
+                      <>
+                        <Link to={`/update/${movie._id}`} className="update-button">
+                          Update
+                        </Link>
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDelete(movie._id)}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

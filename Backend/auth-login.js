@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express.Router();
-const { userModel } = require('./UserSchema');
+const { userSchema } = require('./UserSchema');
 const Joi = require('joi');
 const cors = require('cors');
 
@@ -25,7 +25,7 @@ app.post('/signup', async (req, res) => {
         if (error) {
             return res.status(400).send(error.details[0].message);
         }
-        const user = await userModel.create(req.body);
+        const user = await userSchema.create(req.body);
         res.send(user);
     } catch (err) {
         console.error(err);
@@ -40,7 +40,7 @@ app.post('/login', async (req, res) => {
             return res.status(400).send(error.details[0].message);
         }
         const { username, password } = req.body;
-        const user = await userModel.findOne({ username, password });
+        const user = await userSchema.findOne({ username, password });
 
         if (!user) {
             return res.status(401).json({ error: 'Invalid username / password' });
