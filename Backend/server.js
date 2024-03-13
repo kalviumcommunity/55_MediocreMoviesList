@@ -2,15 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const Router  = require('./route.js');
+const Login = require('./auth-login.js')
 var cors = require('cors')
 
 
 const app = express();
 const port = 3000;
 app.use(Router)
-app.use(cors({
-  origin:"http://localhost:5173"
-}))
+app.use(cors())
+app.use(Login)
+
 
 // MongoDB connection 
 const dbURI = process.env.DB_URI;
