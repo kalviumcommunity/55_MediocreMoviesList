@@ -14,7 +14,7 @@ function Form() {
       await axios.post("https://mediocre-movies.onrender.com/add", formData);
       sessionStorage.setItem("registrationSuccess", "true");
       console.log(formData);
-      window.location.href = "/Home";
+      window.location.href = "/home";
     } catch (error) {
       console.error(error);
     }
