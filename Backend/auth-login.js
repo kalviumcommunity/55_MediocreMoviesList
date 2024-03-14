@@ -1,66 +1,45 @@
 const express = require('express');
-const app = express.Router();
-const { userSchema } = require('./UserSchema');
-const Joi = require('joi');
-const cors = require('cors');
+const router = express.Router();
+const { UserModel } = require('./UserSchema');
 
-app.use(express.json());
-app.use(cors());
+router.use(express.json());
 
-
-const signupSchema = Joi.object({
-    name: Joi.string().required(),
-    username: Joi.string().min(3).max(30).required(),
-    password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-});
-
-const loginSchema = Joi.object({
-    username: Joi.string().min(3).max(30).required(),
-    password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-});
-
-app.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
     try {
-        const { error, value } = signupSchema.validate(req.body);
-        if (error) {
-            return res.status(400).send(error.details[0].message);
-        }
-        const user = await userSchema.create(req.body);
-        res.send(user);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-app.post('/login', async (req, res) => {
-    try {
-        const { error, value } = loginSchema.validate(req.body);
-        if (error) {
-            return res.status(400).send(error.details[0].message);
-        }
         const { username, password } = req.body;
-        const user = await userSchema.findOne({ username, password });
-
-        if (!user) {
-            return res.status(401).json({ error: 'Invalid username / password' });
+        const existingUser = await UserModel.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Username is already taken' });
         }
-
-        res.cookie('username', username, { httpOnly: true });
-        res.cookie('password', password, { httpOnly: true });
-
-        res.status(200).json({ user });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Internal Server Error' });
+        const newUser = await UserModel.create({ username, password });
+        res.status(201).json(newUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
-app.post('/logout', (req, res) => {
-    res.clearCookie('username');
-    res.clearCookie('password');
-
-    res.status(200).json({ message: 'Logout successful' });
+router.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const user = await UserModel.findOne({ username });
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid username or password' });
+        }
+        if (user.password !== password) {
+            return res.status(401).json({ error: 'Invalid username or password' });
+        }
+        res.cookie('loggedIn', true, { httpOnly: true });
+        res.status(200).json({ success: true, message: 'Login successful' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
-module.exports = app;
+router.post('/logout', (req, res) => {
+    res.clearCookie('loggedIn');
+    res.status(200).json({ success: true, message: 'Logout successful' });
+});
+
+module.exports = router;

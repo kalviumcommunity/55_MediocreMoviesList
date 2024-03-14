@@ -36,9 +36,10 @@ const UpdateMovieForm = () => {
 
   return (
     <>
-    <h2>Update Movie</h2>
+    <h2 style={{color:"yellow"}}>Update Movie</h2>
     <div className="update-form-container">
-      
+    <div className="bg-img"></div>
+      <div className="trans"></div>
       <form className="update-form" onSubmit={handleSubmit(onSubmit)}>
         <label>Movie Name:</label>
         <input type="text" {...register("movieName")} />
