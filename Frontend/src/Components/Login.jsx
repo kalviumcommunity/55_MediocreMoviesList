@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import './Login.css';
 
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -27,11 +26,18 @@ function Login() {
         return;
       }
 
-      const response = await axios.post(`https://mediocre-movies.onrender.com/login`, { username, password });
-      if (response.status === 200) {
+      const loginResponse = await axios.post(`https://mediocre-movies.onrender.com/login`, { username, password });
+      if (loginResponse.status === 200) {
         sessionStorage.setItem('loginSuccess', 'Login successful');
         sessionStorage.setItem('login', true);
-        navigate("/home");
+        
+        const authResponse = await axios.post(`https://mediocre-movies.onrender.com/auth`, { username, password });
+        if (authResponse.status === 200) {
+          document.cookie = `accessToken=${authResponse.data.accessToken}; path=/;`;
+          navigate("/home");
+        } else {
+          setLoginMessage('Invalid Credentials');
+        }
       } else {
         setLoginMessage('Invalid Credentials');
       }

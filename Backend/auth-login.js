@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { UserModel } = require('./UserSchema');
+const jwt = require('jsonwebtoken')
+
 
 router.use(express.json());
 
@@ -41,5 +43,25 @@ router.post('/logout', (req, res) => {
     res.clearCookie('loggedIn');
     res.status(200).json({ success: true, message: 'Logout successful' });
 });
+
+
+
+router.post('/auth', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const user = {
+            "username": username,
+            "password": password
+        };
+        const ACCESS_TOKEN = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+        res.cookie('token', ACCESS_TOKEN, { maxAge: 365 * 24 * 60 * 60 * 1000 });
+        res.json({ "accessToken": ACCESS_TOKEN });
+    } catch (err) {
+        console.error(err);
+
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 
 module.exports = router;
