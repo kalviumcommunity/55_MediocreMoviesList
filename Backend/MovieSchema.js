@@ -9,7 +9,8 @@ const movieSchema = new mongoose.Schema({
   imdbRating: String,
   rottenTomatoesRating: String,
   hasSequel: Boolean,
-  img: String
+  img: String,
+  created_by: String
 });
 
 module.exports = mongoose.model('Movie', movieSchema, 'MediocreMovies-Collection-2');
