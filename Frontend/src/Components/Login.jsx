@@ -18,6 +18,16 @@ function Login() {
     return () => clearTimeout(timer); 
   }, [loginMessage]);
 
+  const setCookie = (name, value, days) => {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  };
+
   const onSubmit = async (data) => {
     const { username, password } = data;
     try {
@@ -26,18 +36,14 @@ function Login() {
         return;
       }
 
-      const loginResponse = await axios.post(`https://mediocre-movies.onrender.com/login`, { username, password });
-      if (loginResponse.status === 200) {
+      const response = await axios.post(`https://mediocre-movies.onrender.com/login`, { username, password });
+      if (response.status === 200) {
+        sessionStorage.setItem('username', username);
+        setCookie('username', username, 365);
+        setCookie('password', password, 365);
         sessionStorage.setItem('loginSuccess', 'Login successful');
         sessionStorage.setItem('login', true);
-        
-        const authResponse = await axios.post(`https://mediocre-movies.onrender.com/auth`, { username, password });
-        if (authResponse.status === 200) {
-          document.cookie = `accessToken=${authResponse.data.accessToken}; path=/;`;
-          navigate("/home");
-        } else {
-          setLoginMessage('Invalid Credentials');
-        }
+        navigate("/home");
       } else {
         setLoginMessage('Invalid Credentials');
       }
@@ -46,6 +52,8 @@ function Login() {
       setLoginMessage('Invalid Credentials');
     }
   };
+
+  
 
   return (
     <div className="form-container">

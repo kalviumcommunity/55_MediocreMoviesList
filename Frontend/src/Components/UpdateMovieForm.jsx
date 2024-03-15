@@ -26,7 +26,7 @@ const UpdateMovieForm = () => {
 
   const onSubmit = async (formData) => {
     try {
-      await axios.put(`https://mediocre-movies.onrender.com/update/${id}`, formData);
+      await axios.put(`http://localhost:3000/update/${id}`, formData);
       console.log("Movie updated successfully:", formData);
       window.location.href = "/home";
     } catch (error) {
@@ -37,9 +37,9 @@ const UpdateMovieForm = () => {
   return (
     <>
     <h2 style={{color:"yellow"}}>Update Movie</h2>
-    <div className="update-form-container">
     <div className="bg-img"></div>
-      <div className="trans"></div>
+    <div className="update-form-container">
+    
       <form className="update-form" onSubmit={handleSubmit(onSubmit)}>
         <label>Movie Name:</label>
         <input type="text" {...register("movieName")} />

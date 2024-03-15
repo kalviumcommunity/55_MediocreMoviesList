@@ -11,7 +11,12 @@ function Form() {
 
   const onSubmit = async (formData) => {
     try {
-      await axios.post("https://mediocre-movies.onrender.com/add", formData);
+      const updatedFormData = {
+        ...formData,
+        created_by: sessionStorage.getItem("username"),
+      };
+
+      await axios.post("http://localhost:3000/add", updatedFormData);
       sessionStorage.setItem("registrationSuccess", "true");
       console.log(formData);
       window.location.href = "/home";
@@ -19,7 +24,6 @@ function Form() {
       console.error(error);
     }
   };
-
   return ( 
     <div className="form-container">
       <div className="bg-img"></div>

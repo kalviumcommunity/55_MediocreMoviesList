@@ -14,3 +14,4 @@ const movieSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Movie', movieSchema, 'MediocreMovies-Collection-2');
+ 

@@ -18,7 +18,8 @@ const movieSchema = Joi.object({
     imdbRating: Joi.string().required(),
     rottenTomatoesRating: Joi.string().required(),
     hasSequel: Joi.boolean().required(),
-    img: Joi.string().uri().required() 
+    img: Joi.string().uri().required(),
+    created_by: Joi.string().required()
 });
 
 // POST route to create a new movie entity
@@ -102,13 +103,12 @@ router.delete('/delete/:id', async (req, res) => {
 
 router.get('/users', async (req, res) => {
     try {
-        const test = await UserModel.find({})
-        console.log(test)
-        res.send(test)
+        const users = await Movie.find();
+        res.json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error');
     }
-    catch (err) {
-        console.log(err)
-    }
-}) 
+}); 
 
 module.exports = router;
