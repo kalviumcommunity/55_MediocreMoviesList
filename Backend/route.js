@@ -18,7 +18,8 @@ const movieSchema = Joi.object({
     imdbRating: Joi.string().required(),
     rottenTomatoesRating: Joi.string().required(),
     hasSequel: Joi.boolean().required(),
-    img: Joi.string().uri().required() 
+    img: Joi.string().uri().required(),
+    created_by: Joi.string().required()
 });
 
 // POST route to create a new movie entity
@@ -67,17 +68,15 @@ router.get('/read/:id', async (req, res) => {
 
 // PUT route to update a movie by ID
 router.put('/update/:id', async (req, res) => {
-    const { error } = movieSchema.validate(req.body);
-    if (error) return res.status(400).json({ error: error.details[0].message });
-
-    const hasSequel = req.body.hasSequel === 'true';
     try {
+        const hasSequel = req.body.hasSequel === 'true';
         const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, {
             ...req.body,
             hasSequel: hasSequel
         }, { new: true });
-        if (!updatedMovie) return res.status(404).json({ error: 'Movie not found' });
-        
+        if (!updatedMovie) {
+            return res.status(404).json({ error: 'Movie not found' });
+        }
         console.log('Movie updated:', updatedMovie);
         res.status(200).json({ message: 'Movie updated successfully', movie: updatedMovie });
     } catch (err) {
@@ -100,5 +99,16 @@ router.delete('/delete/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+
+router.get('/users', async (req, res) => {
+    try {
+        const users = await Movie.find();
+        res.json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error');
+    }
+}); 
 
 module.exports = router;

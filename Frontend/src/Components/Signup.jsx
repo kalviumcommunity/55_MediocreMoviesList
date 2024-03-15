@@ -16,9 +16,10 @@ function Signup() {
         setSignupError("Password should be more than 5 characters");
         return;
       }
-
+  
       const response = await axios.post(`https://mediocre-movies.onrender.com/signup`, { username, password });
       if (response.status === 201) {
+        sessionStorage.setItem('username', username);
         sessionStorage.setItem('login', true);
         sessionStorage.setItem('signupSuccess', 'Signup successful');
         navigate("/home");

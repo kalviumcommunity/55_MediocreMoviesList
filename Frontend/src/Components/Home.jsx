@@ -1,27 +1,39 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import logoImg from "../assets/logo.png";
 import searchImg from "../assets/search.png";
 import "./Home.css";
 
 function Home() {
   const [movies, setMovies] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchMovies();
+    fetchUsers();
     checkLoginStatus();
   }, []);
 
   const fetchMovies = async () => {
     try {
-      const response = await fetch("https://mediocre-movies.onrender.com/read");
-      const data = await response.json();
-      setMovies(data);
+      const response = await axios.get("https://mediocre-movies.onrender.com/read");
+      setMovies(response.data);
     } catch (error) {
       console.error("Error fetching movies:", error);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/users");
+      setUsers(response.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
     }
   };
 
@@ -30,11 +42,13 @@ function Home() {
     setIsLoggedIn(loginStatus === "true");
   };
 
+  const handleFilterByUser = (e) => {
+    setSelectedUser(e.target.value);
+  };
+
   const handleDelete = async (id) => {
     try {
-      await fetch(`https://mediocre-movies.onrender.com/delete/${id}`, {
-        method: "DELETE",
-      });
+      await axios.delete(`https://mediocre-movies.onrender.com/delete/${id}`);
       fetchMovies();
     } catch (error) {
       console.error("Error deleting movie:", error);
@@ -57,6 +71,10 @@ function Home() {
   const filteredMovies = movies.filter((movie) =>
     movie.movieName.toLowerCase().includes(searchInput.toLowerCase())
   );
+
+  const filteredMoviesByUser = selectedUser
+    ? filteredMovies.filter((movie) => movie.created_by === selectedUser)
+    : filteredMovies;
 
   return (
     <>
@@ -105,8 +123,19 @@ function Home() {
               )}
             </div>
           </div>
+          <div className="user-filter">
+          <select value={selectedUser} onChange={handleFilterByUser}>
+  <option value="">All Users</option>
+  {[...new Set(users.map(user => user.created_by))].map((username) => (
+    <option key={username} value={username}>
+      {username}
+    </option>
+  ))}
+</select>
+
+          </div>
           <div className="card-container">
-            {filteredMovies.map((movie) => (
+            {filteredMoviesByUser.map((movie) => (
               <div className="card" key={movie._id}>
                 <img src={movie.img} alt="movie poster" width="250px" />
                 <div className="card-info">
@@ -138,8 +167,8 @@ function Home() {
                     {isLoggedIn && (
                       <>
                         <Link to={`/update/${movie._id}`}>
-                      <button className="update-button">Update</button>
-                    </Link>
+                          <button className="update-button">Update</button>
+                        </Link>
                         <button
                           className="delete-button"
                           onClick={() => handleDelete(movie._id)}
