@@ -26,7 +26,7 @@ const UpdateMovieForm = () => {
 
   const onSubmit = async (formData) => {
     try {
-      await axios.put(`http://localhost:3000/update/${id}`, formData);
+      await axios.put(`https://mediocre-movies.onrender.com/update/${id}`, formData);
       console.log("Movie updated successfully:", formData);
       window.location.href = "/home";
     } catch (error) {

@@ -16,7 +16,7 @@ function Form() {
         created_by: sessionStorage.getItem("username"),
       };
 
-      await axios.post("http://localhost:3000/add", updatedFormData);
+      await axios.post("https://mediocre-movies.onrender.com/add", updatedFormData);
       sessionStorage.setItem("registrationSuccess", "true");
       console.log(formData);
       window.location.href = "/home";

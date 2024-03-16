@@ -30,7 +30,7 @@ function Home() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/users");
+      const response = await axios.get("https://mediocre-movies.onrender.com/users");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
