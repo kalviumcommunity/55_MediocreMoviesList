@@ -2,12 +2,19 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const Router  = require('./route.js');
+const Login = require('./auth-login.js')
+var cors = require('cors')
+
 
 const app = express();
 const port = 3000;
 app.use(Router)
-// MongoDB connection
-const dbURI = process.env.DB_URI;
+app.use(cors())
+app.use(Login)
+
+
+// MongoDB connection 
+const dbURI = process.env.DB_URI; 
 
 const connectToDB = async () => {
   try {
@@ -26,10 +33,10 @@ const dbConnection = mongoose.connection;
 // Event listener for connection error
 dbConnection.on('error', (err) => {
   console.error('❌ MongoDB connection error:', err.message);
-});
+}); 
 
 // Event listener for disconnection and reconnection
-dbConnection.on('disconnected', () => {
+dbConnection.on('disconnected', () => { 
   console.log('❌ MongoDB disconnected');
 });
 

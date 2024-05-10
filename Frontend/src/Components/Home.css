@@ -1,26 +1,29 @@
 .Home {
   position: relative;
   height: 100vh;
-  background-image: url("../assets/movie-bg.jpg");
-  background-size: cover;
-  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #ffd000;
+  color: #ff0000;
   text-align: center;
   z-index: 0;
+  overflow-y: scroll  ;
 }
 
-.trans {
-  background-color: rgba(0, 0, 0, 0.6);
+.bg-img{
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: -1;
+  background-image: url("../assets/movie-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat:no-repeat
 }
+
+
 
 .navbar {
   position: fixed;
@@ -58,6 +61,10 @@
   margin-right: 10px;
 }
 
+.user-filter{
+  margin-top: 120px;
+}
+
 .search-bar button {
   border: none;
   background-color: transparent;
@@ -75,9 +82,10 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  gap: 10px;
 }
 
-.navbar-links a {
+.navbar-links {
   color: inherit;
   text-decoration: none;
   margin-right: 20px;
@@ -88,21 +96,32 @@
   align-items: center;
 }
 
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 20px; 
+  justify-content: center;
+  margin-top: 20px; 
+}
+
+
 .card {
   display: flex;
   flex-direction: column;
-  margin-top: 200px;
-  width: 250px;
-  height: 500px;
+  margin-top: 60px;
+  width: 300px;
+  height: 580px;
   padding: 10px;
   border-radius: 5px;
+  margin-left: 35px;
   background-color: #fff;
+  margin-bottom: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .card img {
   width: 100%;
-  height: 400px;
+  height: 300px;
 }
 
 .card-info {
@@ -119,3 +138,81 @@
   margin-bottom: 5px;
   font-size: 0.8rem;
 }
+
+.card-buttons{
+  margin-top: 15px;
+}
+
+.update-button {
+  background-color: rgba(0, 201, 0, 0.393);
+  color: rgb(0, 144, 14);
+  border: 2px solid green;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.delete-button {
+  background-color: rgba(197, 0, 0, 0.409);
+  color: rgb(175, 0, 0);
+  border: 2px solid red;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.update-button:hover,
+.delete-button:hover {
+  opacity: 0.8;
+}
+
+.nav-button {
+  background-color: #4CAF50; 
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.nav-button:hover {
+  background-color: #45a049;
+}
+
+
+@media (max-width: 600px) {
+  .card-container {
+    grid-template-columns: 1fr; 
+  }
+
+  .user-filter{
+    margin-top: 270px;
+  }
+
+  .card {
+    margin-left: auto; 
+    margin-right: auto;
+    width: 80%; 
+    margin-top: 70px;
+  }
+
+  .navbar {
+    flex-direction: column; 
+  }
+
+  .navbar-brand {
+    margin-bottom: 20px; 
+  }
+
+  .search-bar {
+    margin-bottom: 20px; 
+  }
+}
+
+
