@@ -13,5 +13,7 @@ const movieSchema = new mongoose.Schema({
   created_by: String
 });
 
-module.exports = mongoose.model('Movie', movieSchema, 'MediocreMovies-Collection-2');
+const MovieModel = mongoose.model('Movie', movieSchema);
+
+module.exports = { MovieModel };
  

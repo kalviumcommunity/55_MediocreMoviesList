@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Movie = require('./MovieSchema');
+const { MovieModel } = require('./MovieSchema');
 const Joi = require('joi');
 const cors = require('cors');
 
@@ -29,7 +29,7 @@ router.post('/add', async (req, res) => {
 
     const hasSequel = req.body.hasSequel === 'true';
     try {
-        const newMovie = await Movie.create({
+        const newMovie = await MovieModel.create({
             ...req.body,
             hasSequel: hasSequel
         });
@@ -44,7 +44,7 @@ router.post('/add', async (req, res) => {
 // GET route to read all movies
 router.get('/read', async (req, res) => { 
     try {
-        const movies = await Movie.find(); 
+        const movies = await MovieModel.find(); 
         res.status(200).json(movies);
     } catch (err) {
         console.error('Error in GET request:', err);
@@ -55,7 +55,7 @@ router.get('/read', async (req, res) => {
 // GET route to read a specific movie by ID
 router.get('/read/:id', async (req, res) => {
     try {
-        const movie = await Movie.findById(req.params.id); 
+        const movie = await MovieModel.findById(req.params.id); 
         if (!movie) {
             return res.status(404).json({ error: 'Movie not found' });
         }
@@ -70,7 +70,7 @@ router.get('/read/:id', async (req, res) => {
 router.put('/update/:id', async (req, res) => {
     try {
         const hasSequel = req.body.hasSequel === 'true';
-        const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, {
+        const updatedMovie = await MovieModel.findByIdAndUpdate(req.params.id, {
             ...req.body,
             hasSequel: hasSequel
         }, { new: true });
@@ -88,7 +88,7 @@ router.put('/update/:id', async (req, res) => {
 // DELETE route to delete a movie by ID
 router.delete('/delete/:id', async (req, res) => {
     try {
-        const deletedMovie = await Movie.findByIdAndDelete(req.params.id); 
+        const deletedMovie = await MovieModel.findByIdAndDelete(req.params.id); 
         if (!deletedMovie) {
             return res.status(404).json({ error: 'Movie not found' });
         }
@@ -103,7 +103,7 @@ router.delete('/delete/:id', async (req, res) => {
 
 router.get('/users', async (req, res) => {
     try {
-        const users = await Movie.find();
+        const users = await MovieModel.find();
         res.json(users);
     } catch (error) {
         console.error(error);
