@@ -10,7 +10,7 @@ const UpdateMovieForm = () => {
 
   const fetchMovie = async () => {
     try {
-      const response = await axios.get(`https://mediocre-movies.onrender.com/read/${id}`);
+      const response = await axios.get(`https://five5-mediocremovieslist-obr2.onrender.com/read/${id}`);
       const movieData = response.data;
       Object.keys(movieData).forEach((key) => {
         setValue(key, movieData[key]);
@@ -26,7 +26,7 @@ const UpdateMovieForm = () => {
 
   const onSubmit = async (formData) => {
     try {
-      await axios.put(`https://mediocre-movies.onrender.com/update/${id}`, formData);
+      await axios.put(`https://five5-mediocremovieslist-obr2.onrender.com/update/${id}`, formData);
       console.log("Movie updated successfully:", formData);
       window.location.href = "/home";
     } catch (error) {

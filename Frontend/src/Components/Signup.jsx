@@ -17,7 +17,7 @@ function Signup() {
         return;
       }
   
-      const response = await axios.post(`https://mediocre-movies.onrender.com/signup`, { username, password });
+      const response = await axios.post(`https://five5-mediocremovieslist-obr2.onrender.com/signup`, { username, password }); 
       if (response.status === 201) {
         sessionStorage.setItem('username', username);
         sessionStorage.setItem('login', true);

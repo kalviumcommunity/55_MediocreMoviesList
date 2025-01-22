@@ -16,7 +16,7 @@ function Form() {
         created_by: sessionStorage.getItem("username"),
       };
 
-      await axios.post("https://mediocre-movies.onrender.com/add", updatedFormData);
+      await axios.post("https://five5-mediocremovieslist-obr2.onrender.com/add", updatedFormData);
       sessionStorage.setItem("registrationSuccess", "true");
       console.log(formData);
       window.location.href = "/home";
