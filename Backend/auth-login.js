@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { UserModel } = require('./UserSchema');
 const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
 
 router.use(express.json());
@@ -53,7 +54,7 @@ router.post('/auth', async (req, res) => {
             "username": username,
             "password": password
         };
-        const ACCESS_TOKEN = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+        const ACCESS_TOKEN = jwt.sign(user, process.env.JWT_SECRET);
         res.cookie('token', ACCESS_TOKEN, { maxAge: 365 * 24 * 60 * 60 * 1000 });
         res.json({ "accessToken": ACCESS_TOKEN });
     } catch (err) {
