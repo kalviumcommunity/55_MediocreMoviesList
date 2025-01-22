@@ -21,7 +21,7 @@ function Home() {
 
   const fetchMovies = async () => {
     try {
-      const response = await axios.get("https://mediocre-movies.onrender.com/read");
+      const response = await axios.get("https://five5-mediocremovieslist-obr2.onrender.com/read");
       setMovies(response.data);
     } catch (error) {
       console.error("Error fetching movies:", error);
@@ -30,7 +30,7 @@ function Home() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("https://mediocre-movies.onrender.com/users");
+      const response = await axios.get("https://five5-mediocremovieslist-obr2.onrender.com/users");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -48,7 +48,7 @@ function Home() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://mediocre-movies.onrender.com/delete/${id}`);
+      await axios.delete(`https://five5-mediocremovieslist-obr2.onrender.com/delete/${id}`);
       fetchMovies();
     } catch (error) {
       console.error("Error deleting movie:", error);
